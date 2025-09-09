@@ -8,7 +8,7 @@ const generateToken = (id) => {
   });
 };
 
-// Sign In (Login) - DIPERBAIKI
+// Sign In (Login)
 exports.signIn = async (req, res) => {
   console.log('Login request body:', req.body);
   console.log('Login request headers:', req.headers);
