@@ -22,7 +22,7 @@ exports.signIn = async (req, res) => {
   }
 
   try {
-    // Cek apakah pengguna terdaftar (dengan logging)
+    // Cek apakah pengguna terdaftar 
     console.log('Searching for user with email:', email);
     const user = await User.findOne({ email: email.toLowerCase().trim() });
     console.log('User found in database:', user ? 'YES' : 'NO');
