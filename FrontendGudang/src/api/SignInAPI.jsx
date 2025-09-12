@@ -3,7 +3,7 @@ import axios from "axios";
 export const BASEURL = 'http://localhost:5000';
 const API_SIGNIN = `${BASEURL}/api/auth/signin`;
 
-// Credentials should include { email, password }
+// Credentials should include { username, password }
 export const signIn = async (credentials) => {
   try {
     const response = await axios.post(API_SIGNIN, credentials);
