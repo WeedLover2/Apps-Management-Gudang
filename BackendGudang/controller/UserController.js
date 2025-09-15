@@ -19,4 +19,22 @@ exports.createUser = async (req, res) => {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-}
+};
+
+exports.createUserByAdmin = async (res,req) => {
+    const {name, role, password} = req.body;
+
+    try {
+        const user = await User.create({
+            name,
+            role,
+            password,
+        });
+        
+        res.status(201).json({ success: true, user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message })
+    }
+};
+
+
