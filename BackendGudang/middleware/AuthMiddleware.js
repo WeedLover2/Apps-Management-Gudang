@@ -13,4 +13,4 @@ const AuthenticationApps = (roles) => {
     };
 };
 
-module.exports = {checkRole};
+module.exports = {AuthenticationApps};
