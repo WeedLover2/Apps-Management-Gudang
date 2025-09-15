@@ -3,7 +3,7 @@ import Login from "./Login";
 
 const Logo = () => (
   <div>
-    <img src="../../public/logo.png" alt="Logo" className="h-10 w-auto" />
+    <img src="logo.png" alt="Logo" className="h-10 w-auto" />
     </div>
 );
 
