@@ -106,3 +106,29 @@ exports.updateProduct = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+
+exports.getAllProducts = async (req, res) => {
+    try {
+        const { search } = req.query;
+        let query = {};
+
+        if (search) {
+            query = {
+
+                $or: [
+                    { name: { $regex: search, $options: 'i' }},
+                ],
+            };
+        }
+
+        const products = await Product.find(query);
+
+        res.status(200).json({
+            success: true,
+            count: products.length,
+            data: products,
+        });
+    } catch (err) {
+        res.status(500).json({ sucess: false, error: 'Server Error' });
+    }
+};
