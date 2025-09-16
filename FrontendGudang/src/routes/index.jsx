@@ -13,7 +13,7 @@ function LoginRoute() {
 function SwaggerDocs() {
   return (
     <iframe
-      src="http://localhost:5000/api-docs"
+      src="http://localhost:4000/api-docs"
       title="Swagger API Docs"
       style={{ width: "100%", height: "100vh", border: "none" }}
     />
