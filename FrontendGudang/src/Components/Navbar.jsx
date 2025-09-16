@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import Login from "./Login";
 
 const Logo = () => (
-  <div>
-    <img src="logo.png" alt="Logo" className="h-10 w-auto" />
+  <Link to="/">
+    <div className="hover:cursor-pointer">
+      <img src="logo.png" alt="Logo" className="h-10 w-auto" />
     </div>
+  </Link>
 );
 
 const Navbar = () => {
