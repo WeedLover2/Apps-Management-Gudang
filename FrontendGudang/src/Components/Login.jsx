@@ -16,7 +16,7 @@ const Login = ({ isOpen = true, onClose, onSuccess }) => {
 		try {
 			// Pastikan name dan password dikirim sesuai API
 			const data = await signIn({
-				username: values.name.trim().toLowerCase(),
+				name: values.name.trim().toLowerCase(),
 				password: values.password.trim()
 			});
 			setLoading(false);
