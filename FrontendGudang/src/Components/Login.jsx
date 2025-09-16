@@ -22,6 +22,7 @@ const Login = ({ isOpen = true, onClose, onSuccess }) => {
 			setLoading(false);
 			if (onSuccess) onSuccess(data);
 			if (onClose) onClose();
+			console.log("Login berhasil:", data);
 			navigate("/");
 		} catch (err) {
 			setLoading(false);
