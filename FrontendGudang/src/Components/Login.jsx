@@ -14,9 +14,9 @@ const Login = ({ isOpen = true, onClose, onSuccess }) => {
 		setLoading(true);
 		setError("");
 		try {
-			// Pastikan username dan password dikirim sesuai API
+			// Pastikan name dan password dikirim sesuai API
 			const data = await signIn({
-				username: values.username.trim().toLowerCase(),
+				username: values.name.trim().toLowerCase(),
 				password: values.password.trim()
 			});
 			setLoading(false);
@@ -26,7 +26,7 @@ const Login = ({ isOpen = true, onClose, onSuccess }) => {
 		} catch (err) {
 			setLoading(false);
 			setError(
-				err.response?.data?.message || "Login gagal. Cek username dan password."
+				err.response?.data?.message || "Login gagal. Cek name dan password."
 			);
 		}
 	};
@@ -42,9 +42,9 @@ const Login = ({ isOpen = true, onClose, onSuccess }) => {
 				autoComplete="off"
 			>
 				<Form.Item
-					label="Username"
-					name="username"
-					rules={[{ required: true, message: "Masukkan username!" }]}
+					label="Name"
+					name="name"
+					rules={[{ required: true, message: "Masukkan name!" }]}
 				>
 					<Input autoFocus />
 				</Form.Item>

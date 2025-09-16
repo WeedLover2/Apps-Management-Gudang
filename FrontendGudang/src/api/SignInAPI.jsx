@@ -3,7 +3,7 @@ import { BASEURL } from "./ProductAPI";
 
 const API_SIGNIN = `${BASEURL}/api/auth/signin`;
 
-// Credentials should include { username, password }
+// Credentials should include { name, password }
 export const signIn = async (credentials) => {
   try {
     const response = await axios.post(API_SIGNIN, credentials);
