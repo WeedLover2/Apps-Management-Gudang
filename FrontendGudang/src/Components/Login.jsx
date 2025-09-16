@@ -1,13 +1,15 @@
-
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { signIn } from "../api/SignInAPI";
 
-const Login = ({ isOpen, onClose, onSuccess }) => {
+
+const Login = ({ isOpen = true, onClose, onSuccess }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -17,7 +19,9 @@ const Login = ({ isOpen, onClose, onSuccess }) => {
 			const data = await signIn({ username, password });
 			setLoading(false);
 			if (onSuccess) onSuccess(data);
-			onClose();
+			if (onClose) onClose();
+			// Navigasi ke halaman utama setelah login sukses
+			navigate("/");
 		} catch (err) {
 			setLoading(false);
 			setError(
