@@ -7,7 +7,7 @@ const swaggerDefinition = {
         version: '1.0.0',
         description: 'API documentation for the Warehouse Management System.',
     },
-    servers: [ // Optional: Add server URL for testing in Swagger UI
+    servers: [
         {
             url: 'http://localhost:4000',
             description: 'Development server'
@@ -17,8 +17,8 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    // Path to the API docs
-    apis: ['./server.js'], // Corrected path with glob pattern
+    // This tells Swagger to scan ALL .js files inside the 'routes' folder
+    apis: ['./routes/*.js'], 
 };
 
 const swaggerSpec = swaggerJSDoc(options);
