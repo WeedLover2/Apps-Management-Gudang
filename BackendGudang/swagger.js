@@ -9,7 +9,7 @@ const swaggerDefinition = {
     },
     servers: [ // Optional: Add server URL for testing in Swagger UI
         {
-            url: 'http://localhost:5000',
+            url: 'http://localhost:4000',
             description: 'Development server'
         }
     ]
@@ -18,7 +18,7 @@ const swaggerDefinition = {
 const options = {
     swaggerDefinition,
     // Path to the API docs
-    apis: ['./routes/*.js'], // Corrected path with glob pattern
+    apis: ['./server.js'], // Corrected path with glob pattern
 };
 
 const swaggerSpec = swaggerJSDoc(options);

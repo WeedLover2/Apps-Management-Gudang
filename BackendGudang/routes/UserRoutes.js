@@ -6,7 +6,7 @@ const router = express.Router()
 // Endpoint API
 router.get('/', getUsers);
 router.post('/', createUser);
-router.post('/', AuthenticationApps('admin'), createUserByAdmin);
+router.post('/admin-create', AuthenticationApps('admin'), createUserByAdmin);
 
 
 module.exports = router;

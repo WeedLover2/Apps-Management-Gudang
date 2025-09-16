@@ -14,12 +14,26 @@ const upload = multer({ dest: "uploads/products/" }) // Folder sementara di serv
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Products
+ *   description: API untuk mengelola produk
+ */
+
+/**
+ * @swagger
+ * get: /products
+ * tags: [Products]
+ * summary: Mengambil semua produk
+ */
+
 // Endpoint API
 router.get("/", getProducts);
 router.get("/:id", getDetailProduct);
 router.delete("/:id", deleteProduct);
 router.patch("/:id", upload.single("thumbnail"), updateProduct);
 router.post("/", upload.single("thumbnail"), createProduct);
-router.get("/", getAllProducts);
+router.get("/search", getAllProducts);
 
 module.exports = router;

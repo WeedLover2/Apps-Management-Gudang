@@ -13,25 +13,24 @@ exports.signIn = async (req, res) => {
   console.log('Login request body:', req.body);
   console.log('Login request headers:', req.headers);
   
-  const { email, password } = req.body;
+  const { name, password } = req.body;
 
   // Validasi input kosong
-  if (!email || !password) {
-    console.log('Missing email or password');
-    return res.status(400).json({ message: 'Email and password are required' });
+  if (!name || !password) {
+    console.log('Missing name or password');
+    return res.status(400).json({ message: 'name and password are required' });
   }
 
   try {
     // Cek apakah pengguna terdaftar 
-    console.log('Searching for user with email:', email);
-    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    console.log('Searching for user with name:', name);
+    const user = await User.findOne({ name: name.toLowerCase().trim() });
     console.log('User found in database:', user ? 'YES' : 'NO');
     
     if (user) {
       console.log('User data:', {
         id: user._id,
         name: user.name,
-        email: user.email,
         role: user.role,
         hasPassword: !!user.password
       });
@@ -50,17 +49,16 @@ exports.signIn = async (req, res) => {
     
     if (user.password !== password) {
       console.log('Password mismatch');
-      return res.status(401).json({ message: 'Email and password did not match' });
+      return res.status(401).json({ message: 'name and password did not match' });
     }
 
-    console.log('Login successful for user:', user.email);
+    console.log('Login successful for user:', user.name);
 
     // Berikan token dan informasi user
     res.json({
-      _id: user._id, // DIPERBAIKI: __id -> _id
+      _id: user._id, 
       name: user.name,
       role: user.role,
-      email: user.email,
       token: generateToken(user._id),
     });
 
