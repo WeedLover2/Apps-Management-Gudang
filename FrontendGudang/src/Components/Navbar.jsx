@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";  
 import Login from "./Login";
 
 const Logo = () => (
@@ -29,9 +30,11 @@ const Navbar = () => {
   const renderRightButtons = () => {
     if (!user) {
       return (
-        <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors" onClick={() => setIsLoginOpen(true)}>
-          Login
-        </button>
+        <Link to="/login">
+          <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 hover:cursor-pointer transition-colors">
+            Login
+          </button>
+        </Link>
       );
     }
     if (user.role === "user") {
@@ -61,8 +64,6 @@ const Navbar = () => {
       <div className="flex-1 flex justify-start">{renderUserBox()}</div>
       <div className="flex-1 flex justify-center"><Logo /></div>
       <div className="flex-1 flex justify-end">{renderRightButtons()}</div>
-
-      <Login isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} onSuccess={handleLoginSuccess} />
     </nav>
   );
 };
