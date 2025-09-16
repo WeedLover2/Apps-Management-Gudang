@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { signIn } from "../api/SignInAPI";
 import { Form, Input, Button } from "antd";
+import { AuthContext } from "../context/AuthContext";
 
-
-const Login = ({ isOpen = true, onClose, onSuccess }) => {
+const Login = ({ isOpen = true, onClose }) => {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const { login } = useContext(AuthContext);
 
 	const onFinish = async (values) => {
 		setLoading(true);
 		setError("");
 		try {
-			// Pastikan name dan password dikirim sesuai API
 			const data = await signIn({
 				name: values.name.trim().toLowerCase(),
 				password: values.password.trim()
 			});
+			login(data); // simpan ke global state
 			setLoading(false);
-			if (onSuccess) onSuccess(data);
 			if (onClose) onClose();
 			console.log("Login berhasil:", data);
 			navigate("/");

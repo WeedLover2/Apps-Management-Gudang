@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";  
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import Login from "./Login";
 
 const Logo = () => (
@@ -11,17 +12,12 @@ const Logo = () => (
 );
 
 const Navbar = () => {
-  const [user, setUser] = useState(null); // { name: "Nama User", role: "admin" | "user" }
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-
-  const handleLoginSuccess = (userData) => {
-    setUser(userData); 
-  };
+  const { user, logout } = useContext(AuthContext);
 
   const renderUserBox = () => {
     if (user) {
       return (
-        <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 font-semibold" onClick={() => alert("Profil/Logout coming soon")}>
+        <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 font-semibold hover:cursor-pointer" onClick={logout}>
           {user.name}
         </button>
       );
