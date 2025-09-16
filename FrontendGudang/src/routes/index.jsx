@@ -10,6 +10,16 @@ function LoginRoute() {
   return <Login isOpen={true} onClose={() => navigate("/")} />;
 }
 
+function SwaggerDocs() {
+  return (
+    <iframe
+      src="http://localhost:5000/api-docs"
+      title="Swagger API Docs"
+      style={{ width: "100%", height: "100vh", border: "none" }}
+    />
+  );
+}
+
 const AppRoutes = () => {
   const location = useLocation();
   const state = location.state;
@@ -22,6 +32,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Home />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/tianicikiwir" element={<SwaggerDocs />} />
       </Routes>
 
       {/* Modal Login */}
