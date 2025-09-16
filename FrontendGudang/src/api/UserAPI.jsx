@@ -1,6 +1,6 @@
 import axios from "axios";
+import { BASEURL } from "./ProductAPI";
 
-export const BASEURL = 'http://localhost:5000';
 const API_USER = `${BASEURL}/api/users`;
 
 // Get all user

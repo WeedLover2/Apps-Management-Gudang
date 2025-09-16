@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-export const BASEURL = 'http://localhost:5000';
+export const BASEURL = 'http://localhost:4000';
 const API_PRODUCT = `${BASEURL}/api/products`;
 
 // Get all products
