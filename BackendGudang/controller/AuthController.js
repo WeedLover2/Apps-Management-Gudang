@@ -24,7 +24,7 @@ exports.signIn = async (req, res) => {
   try {
     // Cek apakah pengguna terdaftar 
     console.log('Searching for user with name:', name);
-    const user = await User.findOne({ name: name.toLowerCase().trim() });
+    const user = await User.findOne({ name: { $regex: `^${name.trim()}$`, $options: 'i' } });
     console.log('User found in database:', user ? 'YES' : 'NO');
     
     if (user) {
