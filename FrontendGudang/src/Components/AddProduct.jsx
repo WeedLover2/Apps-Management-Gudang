@@ -112,7 +112,13 @@ const AddProduct = ({ isOpen, onClose }) => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading} className="w-full bg-green-600 hover:bg-green-700" style={{ borderRadius: 6 }}>
+          <Button 
+            type="primary" 
+            htmlType="submit" 
+            loading={loading} 
+            className="w-full bg-green-600 hover:bg-green-700 hover:cursor-pointer" 
+            style={{ borderRadius: 6 }}
+          >
             Tambah Produk
           </Button>
         </Form.Item>
@@ -122,3 +128,4 @@ const AddProduct = ({ isOpen, onClose }) => {
 };
 
 export default AddProduct;
+  

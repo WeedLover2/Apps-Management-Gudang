@@ -37,7 +37,7 @@ const Navbar = () => {
     if (user.role === "user") {
       return (
         <Link to="/add-product">
-          <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+          <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 hover:cursor-pointer transition-colors">
             Tambah Produk
           </button>
         </Link>
@@ -47,12 +47,12 @@ const Navbar = () => {
       return (
         <div className="flex gap-2">
           <Link to="/add-product">
-            <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+            <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 hover:cursor-pointer transition-colors">
               Tambah Produk
             </button>
           </Link>
     
-          <button className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
+          <button className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 hover:cursor-pointer transition-colors">
             Tambah Akun
           </button>
         </div>
