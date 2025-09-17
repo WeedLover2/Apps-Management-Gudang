@@ -12,6 +12,7 @@ export const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // Ambil semua produk
@@ -67,16 +68,22 @@ export const ProductProvider = ({ children }) => {
 
   // Hapus produk
   const removeProduct = async (id) => {
-    setLoading(true);
+    setDeleteLoading(true);
     setError(null);
+    
+    // Timeout promise
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Timeout: Penghapusan gagal, silakan coba lagi')), 10000);
+    });
+    
     try {
-      await deleteProduct(id);
+      await Promise.race([deleteProduct(id), timeoutPromise]);
       setProducts((prev) => prev.filter((p) => p._id !== id));
     } catch (err) {
       setError(err.message);
       throw err;
     } finally {
-      setLoading(false);
+      setDeleteLoading(false);
     }
   };
 
@@ -85,6 +92,7 @@ export const ProductProvider = ({ children }) => {
       value={{
         products,
         loading,
+        deleteLoading,
         error,
         fetchProducts,
         addProduct,
