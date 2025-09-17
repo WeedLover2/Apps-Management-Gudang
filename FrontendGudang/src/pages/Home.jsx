@@ -15,7 +15,7 @@ const EmptyIcon = () => (
 const Home = () => {
   const { products } = useContext(ProductContext);
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 px-5">
       {products && products.length > 0 ? <ProductCard /> : <EmptyIcon />}
     </div>
   );
