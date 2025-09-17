@@ -4,10 +4,16 @@ import Home from "../pages/Home";
 import Login from "../Components/Login";
 import NotFound from "../pages/NotFound";
 import Navbar from "../Components/Navbar";
+import AddProduct from "../Components/AddProduct";
 
 function LoginRoute() {
   const navigate = useNavigate();
   return <Login isOpen={true} onClose={() => navigate("/")} />;
+}
+
+function AddProductRoute() {
+  const navigate = useNavigate();
+  return <AddProduct isOpen={true} onClose={() => navigate("/")} />;
 }
 
 function SwaggerDocs() {
@@ -32,12 +38,18 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Home />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/add-product" element={<Home />} />
         <Route path="/tianicikiwir" element={<SwaggerDocs />} />
       </Routes>
 
       {/* Modal Login */}
       {location.pathname === "/login" && (
         <LoginRoute />
+      )}
+
+      {/* Modal Add Product */}
+      {location.pathname === "/add-product" && (
+        <AddProductRoute />
       )}
     </>
   );
