@@ -78,7 +78,7 @@ const AddProduct = ({ isOpen, onClose }) => {
           name="Description"
           rules={[
             { required: true, message: "Masukkan deskripsi produk!" },
-            { max: 500, message: "Deskripsi maksimal 500 karakter!" }
+            { max: 250, message: "Deskripsi maksimal 250 karakter!" }
           ]}
         >
           <Input.TextArea rows={3} />
