@@ -16,7 +16,7 @@ const Login = ({ isOpen = true, onClose }) => {
 		setError("");
 		try {
 			const data = await signIn({
-				name: values.name.trim().toLowerCase(),
+				name: values.name,
 				password: values.password.trim()
 			});
 			login(data); // simpan ke global state
