@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
+import ProductCard from "../Components/ProductCard";
+import SearchBar from "../Components/SearchBar";
+import { ProductContext } from "../context/ProductContext";
 
-const Home = () => (
-	<div className="flex flex-col items-center justify-center min-h-[60vh]">
-		<h1 className="text-3xl font-bold mb-4">Selamat Datang di GudangApp</h1>
-		<p className="text-gray-600">Aplikasi manajemen gudang sederhana.</p>
-	</div>
+const EmptyIcon = () => (
+  <div className="flex flex-col items-center justify-center h-96">
+    <img 
+			src="https://i.pinimg.com/736x/6b/c2/7f/6bc27f9435b6d687fc5d0307ffbfbf82.jpg" 
+			alt="No Product" 
+			className="w-32 h-32 opacity-50 mb-4" />
+    <div className="text-gray-400 text-lg">Belum ada produk</div>
+  </div>
 );
+
+const Home = () => {
+  const { filteredProducts } = useContext(ProductContext);
+  return (
+    <>
+      <SearchBar />
+      <div className="container mx-auto py-8 px-5">
+        {filteredProducts && filteredProducts.length > 0 ? <ProductCard /> : <EmptyIcon />}
+      </div>
+    </> 
+  );
+};
 
 export default Home;

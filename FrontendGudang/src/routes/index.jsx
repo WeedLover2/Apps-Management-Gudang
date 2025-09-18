@@ -1,13 +1,25 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Home from "../pages/Home";
-import Login from "../Components/Login";
+import Login from "../Modal/Login";
 import NotFound from "../pages/NotFound";
 import Navbar from "../Components/Navbar";
+import AddProduct from "../Modal/AddProduct";
+import CreateUser from "../Modal/CreateUser";
 
 function LoginRoute() {
   const navigate = useNavigate();
   return <Login isOpen={true} onClose={() => navigate("/")} />;
+}
+
+function AddProductRoute() {
+  const navigate = useNavigate();
+  return <AddProduct isOpen={true} onClose={() => navigate("/")} />;
+}
+
+function CreateUserRoute() {
+  const navigate = useNavigate();
+  return <CreateUser isOpen={true} onClose={() => navigate("/")} />;
 }
 
 function SwaggerDocs() {
@@ -32,12 +44,24 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Home />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/add-product" element={<Home />} />
+        <Route path="/create-user" element={<Home />} />
         <Route path="/tianicikiwir" element={<SwaggerDocs />} />
       </Routes>
 
       {/* Modal Login */}
       {location.pathname === "/login" && (
         <LoginRoute />
+      )}
+
+      {/* Modal Add Product */}
+      {location.pathname === "/add-product" && (
+        <AddProductRoute />
+      )}
+
+      {/* Modal Create User */}
+      {location.pathname === "/create-user" && (
+        <CreateUserRoute />
       )}
     </>
   );

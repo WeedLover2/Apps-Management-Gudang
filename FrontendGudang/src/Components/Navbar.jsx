@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import Login from "./Login";
 
 const Logo = () => (
   <Link to="/">
@@ -37,20 +36,27 @@ const Navbar = () => {
     }
     if (user.role === "user") {
       return (
-        <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
-          Tambah Produk
-        </button>
+        <Link to="/add-product">
+          <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 hover:cursor-pointer transition-colors">
+            Tambah Produk
+          </button>
+        </Link>
       );
     }
     if (user.role === "admin") {
       return (
         <div className="flex gap-2">
-          <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
-            Tambah Produk
-          </button>
-          <button className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
-            Tambah Akun
-          </button>
+          <Link to="/add-product">
+            <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 hover:cursor-pointer transition-colors">
+              Tambah Produk
+            </button>
+          </Link>
+    
+          <Link to="/create-user">
+            <button className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 hover:cursor-pointer transition-colors">
+              Tambah Akun
+            </button>
+          </Link>
         </div>
       );
     }
