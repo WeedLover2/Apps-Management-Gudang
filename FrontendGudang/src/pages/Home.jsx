@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ProductCard from "../Components/ProductCard";
+import SearchBar from "../Components/SearchBar";
 import { ProductContext } from "../context/ProductContext";
 
 const EmptyIcon = () => (
@@ -13,11 +14,14 @@ const EmptyIcon = () => (
 );
 
 const Home = () => {
-  const { products } = useContext(ProductContext);
+  const { filteredProducts } = useContext(ProductContext);
   return (
-    <div className="container mx-auto py-8 px-5">
-      {products && products.length > 0 ? <ProductCard /> : <EmptyIcon />}
-    </div>
+    <>
+      <SearchBar />
+      <div className="container mx-auto py-8 px-5">
+        {filteredProducts && filteredProducts.length > 0 ? <ProductCard /> : <EmptyIcon />}
+      </div>
+    </> 
   );
 };
 

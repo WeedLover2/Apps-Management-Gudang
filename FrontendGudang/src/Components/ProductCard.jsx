@@ -4,10 +4,10 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Spin, message } from 'antd';
 
 const ProductCard = () => {
-  const { products, removeProduct, deleteLoading, error } = useContext(ProductContext);
+  const { filteredProducts, removeProduct, deleteLoading } = useContext(ProductContext);
   const [openId, setOpenId] = useState(null);
 
-  if (!products.length) return <div>Tidak ada produk.</div>;
+  if (!filteredProducts.length) return <div>Tidak ada produk.</div>;
 
   const handleToggle = (id) => {
     setOpenId((prev) => (prev === id ? null : id));
@@ -28,10 +28,10 @@ const ProductCard = () => {
     }
   };
 
-  // Membagi products menjadi baris (misalnya 3 per baris)
+  // Membagi products menjadi baris
   const rows = [];
-  for (let i = 0; i < products.length; i += 4) {
-    rows.push(products.slice(i, i + 4));
+  for (let i = 0; i < filteredProducts.length; i += 4) {
+    rows.push(filteredProducts.slice(i, i + 4));
   }
 
   return (
