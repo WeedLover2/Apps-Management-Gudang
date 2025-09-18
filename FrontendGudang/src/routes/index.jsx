@@ -6,6 +6,7 @@ import NotFound from "../pages/NotFound";
 import Navbar from "../Components/Navbar";
 import AddProduct from "../Modal/AddProduct";
 import CreateUser from "../Modal/CreateUser";
+import EditProduct from "../Modal/EditProduct";
 
 function LoginRoute() {
   const navigate = useNavigate();
@@ -20,6 +21,11 @@ function AddProductRoute() {
 function CreateUserRoute() {
   const navigate = useNavigate();
   return <CreateUser isOpen={true} onClose={() => navigate("/")} />;
+}
+
+function EditProductRoute() {
+  const navigate = useNavigate();
+  return <EditProduct isOpen={true} onClose={() => navigate("/")} />;
 }
 
 function SwaggerDocs() {
@@ -46,6 +52,7 @@ const AppRoutes = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/add-product" element={<Home />} />
         <Route path="/create-user" element={<Home />} />
+        <Route path="/edit-product/:id" element={<Home />} />
         <Route path="/tianicikiwir" element={<SwaggerDocs />} />
       </Routes>
 
@@ -62,6 +69,11 @@ const AppRoutes = () => {
       {/* Modal Create User */}
       {location.pathname === "/create-user" && (
         <CreateUserRoute />
+      )}
+
+      {/* Modal Edit Product */}
+      {location.pathname.startsWith("/edit-product/") && (
+        <EditProductRoute />
       )}
     </>
   );
