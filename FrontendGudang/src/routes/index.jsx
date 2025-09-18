@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Home from "../pages/Home";
-import Login from "../Components/Login";
+import Login from "../Modal/Login";
 import NotFound from "../pages/NotFound";
 import Navbar from "../Components/Navbar";
-import AddProduct from "../Components/AddProduct";
+import AddProduct from "../Modal/AddProduct";
 
 function LoginRoute() {
   const navigate = useNavigate();
