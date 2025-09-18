@@ -98,13 +98,13 @@ const ProductCard = () => {
                           <div className="text-xs text-gray-700 font-semibold bg-white rounded px-2 py-1 shadow mt-10">Stok: {product.Stock}</div>
                           <div className="flex gap-1">
                             <button
-                              className="px-3 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs font-semibold shadow flex items-center gap-1"
+                              className="px-3 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs font-semibold shadow flex items-center gap-1 hover:cursor-pointer"
                               onClick={e => { e.stopPropagation(); handleEdit(product._id); }}
                             >
                               <EditOutlined /> Edit
                             </button>
                             <button
-                              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs font-semibold shadow flex items-center gap-1"
+                              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs font-semibold shadow flex items-center gap-1 hover:cursor-pointer"
                               onClick={e => { e.stopPropagation(); handleDelete(product._id); }}
                             >
                               <DeleteOutlined /> Hapus
