@@ -52,9 +52,11 @@ const Navbar = () => {
             </button>
           </Link>
     
-          <button className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 hover:cursor-pointer transition-colors">
-            Tambah Akun
-          </button>
+          <Link to="/create-user">
+            <button className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 hover:cursor-pointer transition-colors">
+              Tambah Akun
+            </button>
+          </Link>
         </div>
       );
     }
