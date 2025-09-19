@@ -25,7 +25,7 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
   const { refreshProducts } = useContext(ProductContext);
   const [error, setError] = useState(null);
   const [form] = Form.useForm();
-  const [initialLoading, setInitialLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -48,7 +48,7 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
       return;
     }
 
-    setInitialLoading(true);
+    setLoading(true);
     setError(null);
     try {
       console.log('Fetching product data for ID:', productId); // Debug log
@@ -71,7 +71,7 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
       message.error('Gagal mengambil data produk: ' + (err.response?.data?.message || err.message));
       setError(err.response?.data?.message || err.message);
     } finally {
-      setInitialLoading(false);
+      setLoading(false);
     }
   };
 
@@ -132,7 +132,7 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
         Edit Produk
       </div>
 
-      {initialLoading ? (
+      {loading ? (
         <div className="flex justify-center items-center py-8">
           <div className="text-gray-500">Memuat data produk...</div>
         </div>
