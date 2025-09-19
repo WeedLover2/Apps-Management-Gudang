@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, useParams, Navigate } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../Modal/Login";
 import NotFound from "../pages/NotFound";
@@ -7,27 +7,60 @@ import Navbar from "../Components/Navbar";
 import AddProduct from "../Modal/AddProduct";
 import CreateUser from "../Modal/CreateUser";
 import EditProduct from "../Modal/EditProduct";
+import { AuthContext } from "../context/AuthContext";
 
 function LoginRoute() {
   const navigate = useNavigate();
-  return <Login isOpen={true} onClose={() => navigate("/")} />;
+
+  return (
+    <>
+      <Home />
+      <Login 
+        isOpen={true} 
+        onClose={() => navigate("/")} 
+      />
+    </>
+  )
 }
 
 function AddProductRoute() {
   const navigate = useNavigate();
-  return <AddProduct isOpen={true} onClose={() => navigate("/")} />;
+  const { user } = useContext(AuthContext);
+  if (!user) return <Navigate to="/" replace />;
+
+  return (
+    <>
+      <Home />
+      <AddProduct 
+        isOpen={true} 
+        onClose={() => navigate("/")} 
+      />
+    </>
+  )
 }
 
 function CreateUserRoute() {
   const navigate = useNavigate();
-  return <CreateUser isOpen={true} onClose={() => navigate("/")} />;
+  const { user } = useContext(AuthContext);
+  if (!user || user.role !== 'admin') return <Navigate to="/" replace />;
+
+  return (
+    <>
+      <Home/>
+      <CreateUser 
+        isOpen={true}
+        onClose={() => navigate("/")}
+      />
+    </>
+  )
 }
 
 function EditProductRoute() {
   const navigate = useNavigate();
   const { id } = useParams(); // Extract productId from URL
-  
-  console.log('EditProductRoute - Product ID from URL:', id);
+  const { user } = useContext(AuthContext);
+  if (!user) return <Navigate to="/" replace />;
+  console.log('Product ID from URL:', id);
   
   return (
     <>
@@ -58,33 +91,16 @@ const AppRoutes = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar /> 
       <Routes location={backgroundLocation || location}>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Home />} />
+        <Route path="/login" element={<LoginRoute />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/add-product" element={<Home />} />
-        <Route path="/create-user" element={<Home />} />
+        <Route path="/add-product" element={<AddProductRoute />} />
+        <Route path="/create-user" element={<CreateUserRoute />} />
         <Route path="/edit-product/:id" element={<EditProductRoute />} />
         <Route path="/tianicikiwir" element={<SwaggerDocs />} />
       </Routes>
-
-      {/* Modal Login */}
-      {location.pathname === "/login" && (
-        <LoginRoute />
-      )}
-
-      {/* Modal Add Product */}
-      {location.pathname === "/add-product" && (
-        <AddProductRoute />
-      )}
-
-      {/* Modal Create User */}
-      {location.pathname === "/create-user" && (
-        <CreateUserRoute />
-      )}
-
-      {/* Modal Edit Product - Remove this since it's now handled by route */}
     </>
   );
 };
