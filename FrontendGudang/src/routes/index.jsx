@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, useParams } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../Modal/Login";
 import NotFound from "../pages/NotFound";
@@ -25,7 +25,20 @@ function CreateUserRoute() {
 
 function EditProductRoute() {
   const navigate = useNavigate();
-  return <EditProduct isOpen={true} onClose={() => navigate("/")} />;
+  const { id } = useParams(); // Extract productId from URL
+  
+  console.log('EditProductRoute - Product ID from URL:', id);
+  
+  return (
+    <>
+      <Home />
+      <EditProduct 
+        isOpen={true} 
+        onClose={() => navigate("/")} 
+        productId={id} // Oper productId ke modal
+      />
+    </>
+  );
 }
 
 function SwaggerDocs() {
@@ -52,7 +65,7 @@ const AppRoutes = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/add-product" element={<Home />} />
         <Route path="/create-user" element={<Home />} />
-        <Route path="/edit-product/:id" element={<Home />} />
+        <Route path="/edit-product/:id" element={<EditProductRoute />} />
         <Route path="/tianicikiwir" element={<SwaggerDocs />} />
       </Routes>
 
@@ -71,10 +84,7 @@ const AppRoutes = () => {
         <CreateUserRoute />
       )}
 
-      {/* Modal Edit Product */}
-      {location.pathname.startsWith("/edit-product/") && (
-        <EditProductRoute />
-      )}
+      {/* Modal Edit Product - Remove this since it's now handled by route */}
     </>
   );
 };

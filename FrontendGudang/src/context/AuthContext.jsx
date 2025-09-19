@@ -3,6 +3,7 @@ import React, { createContext, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  // Inisialisasi data user dari localStorage bila ada
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
+    // Global State untuk menyediakan state user dan fungsi login/logout
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>

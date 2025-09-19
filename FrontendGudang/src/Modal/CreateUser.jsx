@@ -10,6 +10,7 @@ const CreateUser = ({ isOpen, onClose, onUserCreated }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
+  // Fungsi untuk handle submit form
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
@@ -27,6 +28,7 @@ const CreateUser = ({ isOpen, onClose, onUserCreated }) => {
     }
   };
 
+  // Fungsi untuk handle batal/close modal
   const handleCancel = () => {
     form.resetFields();
     onClose();

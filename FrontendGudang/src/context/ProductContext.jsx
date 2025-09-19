@@ -16,14 +16,14 @@ export const ProductProvider = ({ children }) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Ambil semua produk
+  // Ambil semua produk dari API
   const fetchProducts = async () => {
     setLoading(true);
     setError(null);
     try {
       const data = await getProducts();
       setProducts(data);
-      setFilteredProducts(data); // Set filtered products same as all products initially
+      setFilteredProducts(data); // Set filtered products ke semua produk
     } catch (err) {
       setError(err.message);
     } finally {
@@ -68,7 +68,7 @@ export const ProductProvider = ({ children }) => {
     fetchProducts();
   }, []);
 
-  // Tambah produk baru
+  // Add produk baru
   const addProduct = async (formData) => {
     setLoading(true);
     setError(null);
@@ -86,7 +86,7 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  // Edit produk
+  // Edit produk berdasarkan id
   const editProduct = async (id, formData) => {
     setLoading(true);
     setError(null);
@@ -104,12 +104,29 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  // Refresh produk (ambil ulang di server)
+  const refreshProducts = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getProducts();
+      setProducts(data);
+      setFilteredProducts(data);
+      return data;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Hapus produk
   const removeProduct = async (id) => {
     setDeleteLoading(true);
     setError(null);
     
-    // Timeout promise
+    // Timeout apabila API merespon terlalu lama
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => reject(new Error('Timeout: Penghapusan gagal, silakan coba lagi')), 10000);
     });
@@ -141,6 +158,7 @@ export const ProductProvider = ({ children }) => {
         addProduct,
         editProduct,
         removeProduct,
+        refreshProducts,
       }}
     >
       {children}

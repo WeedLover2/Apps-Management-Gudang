@@ -19,10 +19,10 @@ const Login = ({ isOpen = true, onClose }) => {
 				name: values.name,
 				password: values.password.trim()
 			});
-			login(data); // simpan ke global state
+			login(data); // Simpan data user yang login ke global state
 			setLoading(false);
 			if (onClose) onClose();
-			console.log("Login berhasil:", data);
+			console.log("Login berhasil:", data); // Debug log
 			navigate("/");
 		} catch (err) {
 			setLoading(false);
