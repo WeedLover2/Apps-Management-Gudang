@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import Modal from "./Modal";
-import { Form, Input, InputNumber, Button, Select, Upload, message } from "antd";
-import { EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { Form, Input, InputNumber, Button, Select, message } from "antd";
+import { EditOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import { BASEURL } from "../api/ProductAPI";
 import { ProductContext } from "../context/ProductContext";
-import { getProductById } from "../api/ProductAPI";
 
 const categoryOptions = [
   "Makanan & Minuman",
@@ -21,13 +22,19 @@ const categoryOptions = [
 ];
 
 const EditProduct = ({ isOpen, onClose, productId }) => {
-  const { editProduct, loading } = useContext(ProductContext);
+  const { refreshProducts } = useContext(ProductContext);
   const [error, setError] = useState(null);
   const [form] = Form.useForm();
   const [initialLoading, setInitialLoading] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Fetch product data when modal opens
+  // ngecek props ketika dimount
+  useEffect(() => {
+    console.log('EditProduct props:', { isOpen, productId });
+  }, [isOpen, productId]);
+
+  // Fetch product data saat modal dibuka dan productId berubah
   useEffect(() => {
     if (isOpen && productId) {
       fetchProductData();
@@ -35,12 +42,24 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
   }, [isOpen, productId]);
 
   const fetchProductData = async () => {
+    if (!productId) {
+      setError('ID produk tidak valid');
+      message.error('ID produk tidak ditemukan');
+      return;
+    }
+
     setInitialLoading(true);
+    setError(null);
     try {
-      const product = await getProductById(productId);
+      console.log('Fetching product data for ID:', productId); // Debug log
+      const response = await axios.get(`${BASEURL}/api/products/${productId}`);
+      const product = response.data;
+      if (!product) throw new Error('Produk tidak ditemukan');
+      
+      console.log('Fetched product data:', product); // Debug log
       setCurrentProduct(product);
       
-      // Set form values
+      // Mengset value awal form dengan data produk yang ingin diedit
       form.setFieldsValue({
         name: product.name,
         Stock: product.Stock,
@@ -48,8 +67,9 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
         Category: product.Category,
       });
     } catch (err) {
-      message.error('Gagal mengambil data produk');
-      setError(err.message);
+      console.error('Error fetching product:', err); // Debug log
+      message.error('Gagal mengambil data produk: ' + (err.response?.data?.message || err.message));
+      setError(err.response?.data?.message || err.message);
     } finally {
       setInitialLoading(false);
     }
@@ -57,24 +77,42 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
 
   const handleFinish = async (values) => {
     setError(null);
+    setIsSubmitting(true);
     try {
+      console.log('Form values submitted:', values); // Debug log
+      console.log('Product ID for update:', productId); // Debug log
+      
       const formData = new FormData();
       formData.append("name", values.name);
-      formData.append("Stock", values.Stock);
+      formData.append("Stock", values.Stock.toString());
       formData.append("Description", values.Description);
       formData.append("Category", values.Category);
       
-      // Only append thumbnail if a new file is selected
-      if (values.thumbnail && Array.isArray(values.thumbnail) && values.thumbnail[0]) {
-        formData.append("thumbnail", values.thumbnail[0].originFileObj);
+      console.log('FormData contents:'); // Debug log
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
       }
       
-      await editProduct(productId, formData);
+      const response = await axios.patch(`${BASEURL}/api/products/${productId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      
       message.success('Produk berhasil diperbarui!');
-      handleCancel();
+      setCurrentProduct(response.data);
+      
+      // Auto-refresh products dari server untuk menampilkan perubahan terbaru
+      console.log('Refresh sedang dijalankan...');
+      await refreshProducts();
+      console.log('Halaman berhasil direfresh!');
+      
+      onClose();
     } catch (err) {
-      setError(err.message);
-      message.error('Gagal memperbarui produk');
+      console.error('Edit product error:', err); // Debug log
+      console.error('Error response:', err.response?.data); // Debug log
+      setError(err.response?.data?.message || err.message);
+      message.error('Gagal memperbarui produk: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -82,6 +120,7 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
     form.resetFields();
     setCurrentProduct(null);
     setError(null);
+    setIsSubmitting(false);
     onClose();
   };
 
@@ -183,27 +222,6 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
               />
             </Form.Item>
 
-            {/* Thumbnail */}
-            <Form.Item
-              label={<span className="text-gray-700 font-medium">Thumbnail Baru (Opsional)</span>}
-              name="thumbnail"
-              valuePropName="fileList"
-              getValueFromEvent={(e) => (Array.isArray(e) ? e : e && e.fileList)}
-              extra="Biarkan kosong jika tidak ingin mengubah gambar"
-            >
-              <Upload
-                listType="picture"
-                maxCount={1}
-                beforeUpload={() => false}
-                accept="image/*"
-                className="upload-list-inline"
-              >
-                <Button icon={<UploadOutlined />} className="rounded-lg">
-                  Pilih Gambar Baru
-                </Button>
-              </Upload>
-            </Form.Item>
-
             {/* Action Buttons */}
             <Form.Item className="mb-0 mt-6">
               <div className="flex gap-3 justify-end">
@@ -217,12 +235,12 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
                 <Button 
                   type="primary" 
                   htmlType="submit" 
-                  loading={loading} 
+                  loading={isSubmitting}
                   size="large"
                   className="px-6 bg-orange-600 hover:bg-orange-700 border-orange-600 hover:border-orange-700 rounded-lg shadow-md hover:shadow-lg"
                   icon={<EditOutlined />}
                 >
-                  {loading ? 'Memperbarui...' : 'Perbarui Produk'}
+                  {isSubmitting ? 'Memperbarui...' : 'Perbarui Produk'}
                 </Button>
               </div>
             </Form.Item>
@@ -235,8 +253,8 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
         <div className="text-sm text-blue-800">
           <div className="font-semibold mb-1">💡 Tips Edit Produk:</div>
           <div className="space-y-1 text-xs">
-            <div>• Semua field wajib diisi kecuali thumbnail baru</div>
-            <div>• Thumbnail akan tetap menggunakan gambar lama jika tidak diubah</div>
+            <div>• Semua field wajib diisi</div>
+            <div>• Thumbnail tidak dapat diubah dalam mode ini</div>
             <div>• Pastikan data yang dimasukkan sudah benar sebelum menyimpan</div>
           </div>
         </div>

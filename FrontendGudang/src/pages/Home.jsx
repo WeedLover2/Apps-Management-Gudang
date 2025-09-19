@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import ProductCard from "../Components/ProductCard";
 import SearchBar from "../Components/SearchBar";
 import { ProductContext } from "../context/ProductContext";
+import { Spin } from 'antd';
 
 const EmptyIcon = () => (
   <div className="flex flex-col items-center justify-center h-96">
@@ -14,11 +15,22 @@ const EmptyIcon = () => (
 );
 
 const Home = () => {
-  const { filteredProducts } = useContext(ProductContext);
+  const { filteredProducts, loading } = useContext(ProductContext);
+  
   return (
     <>
       <SearchBar />
       <div className="container mx-auto py-8 px-5">
+        {/* Loading indicator untuk auto-refresh */}
+        {loading && (
+          <div className="fixed top-20 right-4 bg-white rounded-lg shadow-lg p-4 border border-gray-200 z-50">
+            <div className="flex items-center gap-3">
+              <Spin size="small" />
+              <span className="text-sm text-gray-600 font-medium">Memperbarui data produk...</span>
+            </div>
+          </div>
+        )}
+        
         {filteredProducts && filteredProducts.length > 0 ? <ProductCard /> : <EmptyIcon />}
       </div>
     </> 

@@ -104,6 +104,23 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  // Refresh produk (re-fetch from server)
+  const refreshProducts = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getProducts();
+      setProducts(data);
+      setFilteredProducts(data);
+      return data;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Hapus produk
   const removeProduct = async (id) => {
     setDeleteLoading(true);
@@ -141,6 +158,7 @@ export const ProductProvider = ({ children }) => {
         addProduct,
         editProduct,
         removeProduct,
+        refreshProducts,
       }}
     >
       {children}
