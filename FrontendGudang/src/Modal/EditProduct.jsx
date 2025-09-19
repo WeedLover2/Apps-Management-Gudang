@@ -29,7 +29,7 @@ const EditProduct = ({ isOpen, onClose, productId }) => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // ngecek props ketika dimount
+  // Ngecek props ketika dimount
   useEffect(() => {
     console.log('EditProduct props:', { isOpen, productId });
   }, [isOpen, productId]);

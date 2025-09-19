@@ -11,7 +11,7 @@ const SearchBar = () => {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [stockFilter, setStockFilter] = useState('all');
 
-  // Get unique categories from products
+  // Mengambil kategori unik dari ProductContext
   const productCategories = [...new Set(products.map(product => product.Category))];
 
   const handleSearch = () => {
@@ -22,7 +22,7 @@ const SearchBar = () => {
     setSearchTerm('');
     setCategoryFilter('all');
     setStockFilter('all');
-    resetFilters(); // Reset to all products
+    resetFilters();
   };
 
   return (
@@ -101,7 +101,7 @@ const SearchBar = () => {
         </Space>
       </div>
 
-      {/* Search Stats */}
+      {/* Search Result */}
       <div className="mt-4 text-sm text-gray-600">
         <span className="bg-gray-100 px-3 py-1 rounded-full">
           Menampilkan {filteredProducts.length} dari {products.length} produk

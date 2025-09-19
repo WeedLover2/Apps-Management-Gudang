@@ -5,6 +5,7 @@ const Modal = ({ isOpen, onClose, children, transitionDuration = 300 }) => {
   const [visible, setVisible] = useState(false);
   const timeoutRef = useRef();
 
+  // Penggunaan useEffect untuk handle animasi buka/tutup modal
   useEffect(() => {
     if (isOpen) {
       setRendered(true);

@@ -29,6 +29,7 @@ const AddProduct = ({ isOpen, onClose }) => {
     setError(null);
     setIsSubmitting(true);
     try {
+      // Buat formData supaya bisa kirim file + data biasa
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("Stock", values.Stock);
@@ -38,6 +39,7 @@ const AddProduct = ({ isOpen, onClose }) => {
         formData.append("thumbnail", values.thumbnail[0].originFileObj);
       }
       
+      // Panggil API untuk tambah produk
       await addProduct(formData);
       message.success('Produk berhasil ditambahkan!');
       
@@ -46,11 +48,13 @@ const AddProduct = ({ isOpen, onClose }) => {
       await refreshProducts();
       console.log('Halaman berhasil direfresh!');
 
+      // Reset form dan tutup modal ketika sukses
       form.resetFields();
       if (onClose) onClose();
     } catch (err) {
       setError(err.message);
-      message.error('Gagal menambahkan produk: ' + err.message);
+      message.error('Gagal menambahkan produk!');
+      console.error('Gagal menambahkan produk:', err); // Debug log
     } finally {
       setIsSubmitting(false);
     }

@@ -14,10 +14,6 @@ const ProductCard = () => {
     setOpenId((prev) => (prev === id ? null : id));
   };
 
-  const handleEdit = (id) => {
-    alert('Edit produk: ' + id);
-  };
-
   const handleDelete = async (id) => {
     if (window.confirm('Yakin ingin menghapus produk ini?')) {
       try {
@@ -29,7 +25,7 @@ const ProductCard = () => {
     }
   };
 
-  // Membagi products menjadi baris
+  // Membagi products menjadi satu baris, dengan panjang maksimal 4 produk per baris
   const rows = [];
   for (let i = 0; i < filteredProducts.length; i += 4) {
     rows.push(filteredProducts.slice(i, i + 4));
@@ -50,7 +46,8 @@ const ProductCard = () => {
           </div>
         </div>
       )}
-      
+
+      {/* Menampilkan produk dengan menggunakan .map */}
       <div className="flex flex-col gap-6">
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex gap-6 justify-center">
@@ -73,7 +70,7 @@ const ProductCard = () => {
                     />
                   </div>
 
-                  {/* Info bawah 20% - always visible */}
+                  {/* Info produk */}
                   <div
                     className="flex items-center justify-between px-4 py-2 bg-gray-50"
                     style={{ height: '20%', opacity: expanded ? 0 : 1 }}
@@ -87,7 +84,7 @@ const ProductCard = () => {
                     </div>
                   </div>
 
-                  {/* Deskripsi expand */}
+                  {/* Info produk bila di-expand */}
                   <div
                     className={`absolute left-0 bottom-0 w-full bg-white z-20 transition-all duration-500 overflow-hidden shadow-lg ${expanded ? 'h-[50%] opacity-100' : 'h-0 opacity-0'}`}
                     style={{ borderRadius: '0 0 0.75rem 0.75rem' }}
