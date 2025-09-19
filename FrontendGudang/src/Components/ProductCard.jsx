@@ -1,12 +1,17 @@
 import React, { useState, useContext } from "react";
 import { ProductContext } from "../context/ProductContext";
+import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Spin, message } from 'antd';
 
 const ProductCard = () => {
   const { filteredProducts, removeProduct, deleteLoading } = useContext(ProductContext);
+  const { user } = useContext(AuthContext);
   const [openId, setOpenId] = useState(null);
+
+  // Cek apakah user sudah login
+  const isLoggedIn = user !== null;
 
   if (!filteredProducts.length) return <div>Tidak ada produk.</div>;
 
@@ -94,21 +99,32 @@ const ProductCard = () => {
                       <div className="relative h-full flex flex-col justify-between">
                         <div className="flex flex-col items-end gap-2 p-2 absolute top-0 right-0">
                           <div className="text-xs text-gray-700 font-semibold bg-white rounded px-2 py-1 shadow mt-10">Stok: {product.Stock}</div>
-                          <div className="flex gap-1">
-                            <Link to={`/edit-product/${product._id}`}>
+                          
+                          {/* Tombol Edit dan Hapus hanya tampil jika user sudah login */}
+                          {isLoggedIn && (
+                            <div className="flex gap-1">
+                              <Link to={`/edit-product/${product._id}`}>
+                                <button
+                                  className="px-3 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs font-semibold shadow flex items-center gap-1 hover:cursor-pointer"
+                                >
+                                  <EditOutlined /> Edit
+                                </button>
+                              </Link>
                               <button
-                                className="px-3 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs font-semibold shadow flex items-center gap-1 hover:cursor-pointer"
+                                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs font-semibold shadow flex items-center gap-1 hover:cursor-pointer"
+                                onClick={e => { e.stopPropagation(); handleDelete(product._id); }}
                               >
-                                <EditOutlined /> Edit
+                                <DeleteOutlined /> Hapus
                               </button>
-                            </Link>
-                            <button
-                              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs font-semibold shadow flex items-center gap-1 hover:cursor-pointer"
-                              onClick={e => { e.stopPropagation(); handleDelete(product._id); }}
-                            >
-                              <DeleteOutlined /> Hapus
-                            </button>
-                          </div>
+                            </div>
+                          )}
+                          
+                          {/* Pesan untuk user yang belum login */}
+                          {!isLoggedIn && (
+                            <div className="text-xs text-gray-500 bg-gray-100 rounded px-2 py-1 text-center">
+                              Login untuk mengedit
+                            </div>
+                          )}
                         </div>
                         <div className="p-4 pt-10 text-gray-700 text-sm">
                           <div className="font-bold text-base break-words">{product.name}</div>
