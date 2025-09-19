@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
-import { signIn } from "../api/SignInAPI";
+import axios from "axios";
+import { BASEURL } from "../api/ProductAPI";
 import { Form, Input, Button } from "antd";
 import { AuthContext } from "../context/AuthContext";
 
@@ -15,20 +16,20 @@ const Login = ({ isOpen = true, onClose }) => {
 		setLoading(true);
 		setError("");
 		try {
-			const data = await signIn({
-				name: values.name,
-				password: values.password.trim()
-			});
-			login(data); // Simpan data user yang login ke global state
-			setLoading(false);
-			if (onClose) onClose();
-			console.log("Login berhasil:", data); // Debug log
-			navigate("/");
+			console.log("Attempting to sign in with values:", values); // Debug log
+			const response = await axios.post(`${BASEURL}/api/auth/signin`, values);
+			console.log("Sign-in response:", response.data); // Debug log
+			login(response.data);
 		} catch (err) {
+			console.error("Error during sign-in:", err); // Debug log
+			if (err.response && err.response.data && err.response.data.message) {
+				setError(err.response.data.message);
+			} else {
+				setError("Gagal melakukan login. Silakan coba lagi...");
+			}
+		} finally {
 			setLoading(false);
-			setError(
-				err.response?.data?.message || "Login gagal. Cek name dan password."
-			);
+			navigate("/"); 
 		}
 	};
 
