@@ -129,6 +129,6 @@ exports.getAllProducts = async (req, res) => {
             data: products,
         });
     } catch (err) {
-        res.status(500).json({ sucess: false, error: 'Server Error' });
+    res.status(500).json({ success: false, error: 'Server Error' });
     }
 };
