@@ -36,7 +36,7 @@ Go to the project directory
 Install dependencies for backend
 
 ```bash
-  npm i mongoose express body-parser cors cloudinary dotenv express jsonwebtoken midtrans-client multer nodemon Router
+  npm i mongoose express body-parser cors cloudinary dotenv express jsonwebtoken multer nodemon Router
 ```
 
 Install dependencies for frontend
@@ -56,3 +56,7 @@ Start the backend
 ```bash
   npm start
 ```
+
+## Note
+
+You cannot run this project without a .env file, so you'll need to set it up yourself. Check the config folder to see how to configure the variables. Be sure to add the JWT_SECRET and PORT variables. For JWT_SECRET, use your own key, and for PORT, you can set it to 4000 or another available port. I hope you’re able to run the project if you’d like. Unfortunately, contributions to this project are not accepted.
