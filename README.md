@@ -36,7 +36,7 @@ Go to the project directory
 Install dependencies for backend
 
 ```bash
-  npm i mongoose express body-parser cors cloudinary dotenv express jsonwebtoken multer nodemon Router
+  npm i mongoose express body-parser cors cloudinary dotenv express jsonwebtoken multer nodemon Router swagger-ui-express swagger-jsdoc
 ```
 
 Install dependencies for frontend
