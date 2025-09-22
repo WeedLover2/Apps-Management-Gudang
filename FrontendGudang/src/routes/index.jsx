@@ -99,7 +99,7 @@ const AppRoutes = () => {
         <Route path="/add-product" element={<AddProductRoute />} />
         <Route path="/create-user" element={<CreateUserRoute />} />
         <Route path="/edit-product/:id" element={<EditProductRoute />} />
-        <Route path="/tianicikiwir" element={<SwaggerDocs />} />
+        <Route path="/api-docs" element={<SwaggerDocs />} />
       </Routes>
     </>
   );
