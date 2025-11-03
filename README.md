@@ -12,7 +12,7 @@ This project was a simple MERN stack, CRUD application that my friends and I dev
 
 ## Tech Stack
 
-**Frontend:** React, Redux, TailwindCSS
+**Frontend:** React Js, TailwindCSS
 
 **Database:** MongoDB
 
